@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Weather Dashboard (No API Key Needed)</title>
+<style>
+body{font-family:sans-serif;background:#0f1724;color:#e6eef8;padding:20px;}
+.container{max-width:600px;margin:auto;background:rgba(255,255,255,0.05);padding:20px;border-radius:12px;}
+input,button{padding:10px;margin:5px;border-radius:6px;border:none;}
+button{background:#60a5fa;color:#08203a;font-weight:600;cursor:pointer;}
+#weather{margin-top:20px;}
+</style>
+</head>
+<body>
+<div class="container">
+  <h1>Weather Dashboard</h1>
+  <input type="text" id="city" placeholder="Enter city name">
+  <button id="search">Get Weather</button>
+  <div id="weather">Weather info will appear here.</div>
+</div>
+
+<script>
+const weatherBox = document.getElementById('weather');
+
+document.getElementById('search').onclick = async () => {
+  const city = document.getElementById('city').value.trim();
+  if(!city) return alert("Enter a city name");
+
+  try {
+    // Using wttr.in free API (no key required)
+    const url = `https://wttr.in/${encodeURIComponent(city)}?format=j1`;
+    const res = await fetch(url);
+    if(!res.ok) throw new Error("Failed to fetch weather");
+    const data = await res.json();
+
+    const current = data.current_condition[0];
+    const area = data.nearest_area[0];
+    weatherBox.innerHTML = `
+      <h2>${area.areaName[0].value}, ${area.country[0].value}</h2>
+      <p>🌡 Temp: ${current.temp_C} °C</p>
+      <p>💧 Humidity: ${current.humidity}%</p>
+      <p>🌬 Wind: ${current.windspeedKmph} km/h</p>
+      <p>☁ Condition: ${current.weatherDesc[0].value}</p>
+    `;
+  } catch(err) {
+    weatherBox.innerHTML = `<p style="color:red">Error: ${err.message}</p>`;
+  }
+};
+</script>
+</body>
+</html>
