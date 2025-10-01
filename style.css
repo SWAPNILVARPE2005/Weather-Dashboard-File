@@ -1,0 +1,33 @@
+body {
+  font-family: sans-serif;
+  background: #0f1724;
+  color: #e6eef8;
+  padding: 20px;
+}
+
+.container {
+  max-width: 600px;
+  margin: auto;
+  background: rgba(255, 255, 255, 0.05);
+  padding: 20px;
+  border-radius: 12px;
+}
+
+input,
+button {
+  padding: 10px;
+  margin: 5px;
+  border-radius: 6px;
+  border: none;
+}
+
+button {
+  background: #60a5fa;
+  color: #08203a;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+#weather {
+  margin-top: 20px;
+}
